@@ -24,3 +24,6 @@ step() {
 - Puede que el camino aún tenga algunas oscilaciones en Y, pero en general debería desplazarse hacia la derecha a medida que pasa el tiempo.
 
 ## Resultados obtenidos:
+
+![Experimento_caminante](src/assets/Caminante.png)
+
