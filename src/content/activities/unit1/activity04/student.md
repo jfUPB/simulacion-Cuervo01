@@ -38,5 +38,5 @@ function draw() {
 ```
 
 ### Resultado:
-![image](/src/assets/RandomWalk.png)
+![Random_walk](/src/assets/RandomWalk.png)
 
