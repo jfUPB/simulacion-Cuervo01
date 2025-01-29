@@ -1,6 +1,6 @@
-#### Ejemplo de distribución normal
+### Ejemplo de distribución normal
 
-### Código:
+#### Código:
 ```javascript
 function setup() {
   createCanvas(400, 200);
