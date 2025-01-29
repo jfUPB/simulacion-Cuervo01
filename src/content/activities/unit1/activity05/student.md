@@ -1,5 +1,7 @@
 ### Ejemplo de distribución normal
 
+Se usa la función rect(x, y, tamano, tamano) para dibujar cuadrados. Los cuadrados siguen la misma lógica de distribución en x (concentrados en el centro del canvas y distribuidos de manera normal) y se distribuyen verticalmente de manera aleatoria usando y.
+
 #### Código:
 ```javascript
 function setup() {
@@ -27,3 +29,5 @@ function setup() {
 }
 
 ```
+
+![Distribución normal](/src/assets/DistribucionNormal.png)
