@@ -25,5 +25,5 @@ step() {
 
 ## Resultados obtenidos:
 
-![Experimento_caminante](../src/assets/Caminante.png)
+![Experimento_caminante](../../src/assets/Caminante.png)
 
