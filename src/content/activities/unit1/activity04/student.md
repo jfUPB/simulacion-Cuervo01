@@ -1,4 +1,4 @@
-#### Diferencia entre distribución uniforme y no uniforme
+## Diferencia entre distribución uniforme y no uniforme
 
 - En la distribucion uniforme, todos los valores dentro de un rango, tienen la misma probabilidad de ocurrir.
  Es decir, la probabilidad de que se mueva a la derecha o a la izquierda, es la misma.
