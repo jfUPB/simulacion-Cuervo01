@@ -29,5 +29,11 @@ function draw() {
 }
 
 ```
+Se utilizó noise(xOff) para generar valores suaves en y.
+Recorrela pantalla con un for para construir la línea.
+xOff aumenta poco a poco para evitar saltos bruscos.
+xStart mueve la onda en el tiempo.
 
-![image]()
+
+
+![image](/src/assets/RuidoPerlin.png)
