@@ -46,4 +46,4 @@ function draw() {
 
 ```
 
-![image](https://github.com/user-attachments/assets/d9d2d37d-f225-47af-ab67-ebee127316c0)
+![Lévy Flight](/src/assets/lévyflight.png)
