@@ -56,11 +56,6 @@ window.addEventListener('load', () => {
         });
 });
 ```
-![video](/src/assets/Unidad01_Actividad09.mp4)
-
-
-
-
 
 
 https://github.com/user-attachments/assets/bc6c75f4-6b74-464b-9bab-73189dce5df8
