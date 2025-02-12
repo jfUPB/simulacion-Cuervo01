@@ -31,6 +31,8 @@ console.log(a); // Imprime 5, el valor original no ha cambiado
 Paso por referencia: Se aplica a objetos y arrays. Cuando éste [asa a una función, se pasa una referencia al objeto original,
 es decir que, cualquier cambio hecho dentro de la función, afeta también al original.
 
+### Ejemplo
+
 ```javascript
 
 let position;
