@@ -23,29 +23,64 @@ window.addEventListener('load', () => {
             const bufferLength = analyser.frequencyBinCount;
             const dataArray = new Uint8Array(bufferLength);
 
+            let isTriangle = false;
+            let noiseTime = 0;
+            let noiseX = Math.random() * 1000;
+            let noiseY = Math.random() * 1000;
+
+            function perlinNoise(x) {
+                return Math.sin(x) * 0.5 + 0.5;
+            }
+
+            function drawCircle(x, y, size) {
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+
+            function drawTriangle(x, y, size) {
+                ctx.beginPath();
+                ctx.moveTo(x, y - size);
+                ctx.lineTo(x - size, y + size);
+                ctx.lineTo(x + size, y + size);
+                ctx.closePath();
+                ctx.fill();
+            }
+
             function draw() {
                 requestAnimationFrame(draw);
                 analyser.getByteFrequencyData(dataArray);
-
                 const maxVolume = Math.max(...dataArray);
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                // Calcula el color según el volumen
-                const volumeRatio = maxVolume / 256; // Normaliza el volumen (0 a 1)
-                const hue = 120; // Verde
-                const lightness = 20 + (50 - 20) * volumeRatio; // Degradé desde verde oscuro profundo a verde brillante
+                // Configuración de color
+                const volumeRatio = maxVolume / 256;
+                const hue = 120;
+                const lightness = 20 + (50 - 20) * volumeRatio;
+                ctx.fillStyle = `hsl(${hue}, 100%, ${lightness}%)`;
+
+                // Movimiento de todo el grupo con ruido Perlin
+                noiseTime += 0.01;
+                let groupX = canvas.width * perlinNoise(noiseX + noiseTime);
+                let groupY = canvas.height * perlinNoise(noiseY + noiseTime);
+
+                // Ocasionalmente cambiar de círculo a triángulo y viceversa
+                if (Math.random() < 0.02) {
+                    isTriangle = !isTriangle;
+                }
 
                 for (let i = 0; i < 100; i++) {
                     const angle = Math.random() * 2 * Math.PI;
                     const radius = ((Math.random() * maxVolume) / 4) * (maxVolume > 20 ? 2 : 1);
-                    const x = canvas.width / 2 + radius * Math.cos(angle);
-                    const y = canvas.height / 2 + radius * Math.sin(angle);
-                    const size = (Math.random() * 10 + 5) * (maxVolume / 50); // Ajusta el tamaño según el volumen
+                    const x = groupX + radius * Math.cos(angle);
+                    const y = groupY + radius * Math.sin(angle);
+                    const size = (Math.random() * 10 + 5) * (maxVolume / 50);
 
-                    ctx.beginPath();
-                    ctx.arc(x, y, size, 0, 2 * Math.PI);
-                    ctx.fillStyle = `hsl(${hue}, 100%, ${lightness}%)`;
-                    ctx.fill();
+                    if (isTriangle) {
+                        drawTriangle(x, y, size);
+                    } else {
+                        drawCircle(x, y, size);
+                    }
                 }
             }
 
@@ -55,6 +90,7 @@ window.addEventListener('load', () => {
             console.error('Error al acceder al micrófono', err);
         });
 });
+
 ```
 
 
