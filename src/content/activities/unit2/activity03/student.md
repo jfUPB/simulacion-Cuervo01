@@ -10,7 +10,7 @@ se evidencia nada dibujado sobre el canvas.
 
 ## Revisar conceptos:
 
-Paso por valor: Se aplica a tipos de datos como números, cadenas y booleanos. Cuando éste pasa a una función, se pasa 
+**Paso por valor:** Se aplica a tipos de datos como números, cadenas y booleanos. Cuando éste pasa a una función, se pasa 
 una copia del valor original.
 
 ### Ejemplo
@@ -28,7 +28,7 @@ console.log(a); // Imprime 5, el valor original no ha cambiado
 
 ``` 
 
-Paso por referencia: Se aplica a objetos y arrays. Cuando éste [asa a una función, se pasa una referencia al objeto original,
+**Paso por referencia:** Se aplica a objetos y arrays. Cuando éste [asa a una función, se pasa una referencia al objeto original,
 es decir que, cualquier cambio hecho dentro de la función, afeta también al original.
 
 ### Ejemplo
