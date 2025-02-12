@@ -81,6 +81,9 @@ window.addEventListener('load', () => {
                     } else {
                         drawCircle(x, y, size);
                     }
+
+
+
                 }
             }
 
@@ -94,5 +97,6 @@ window.addEventListener('load', () => {
 ```
 
 
-https://github.com/user-attachments/assets/bc6c75f4-6b74-464b-9bab-73189dce5df8
+https://github.com/user-attachments/assets/c0b72833-bc3f-4aff-b8ea-f5ff6d9ed54d
+
 
