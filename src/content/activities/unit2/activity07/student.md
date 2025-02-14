@@ -37,6 +37,7 @@ function draw() {
   if (position.x > width || position.x < 0) {
     velocity.x *= -1;
   }
+
   if (position.y > height || position.y < 0) {
     velocity.y *= -1;
   }
@@ -44,3 +45,8 @@ function draw() {
 
 
 ```
+## Video del ejemplo
+
+
+https://github.com/user-attachments/assets/b58d5005-fb98-442c-8c66-af24e2ed6f9b
+
