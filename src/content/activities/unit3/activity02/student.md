@@ -1,4 +1,4 @@
-##Propuesta de Instalación Interactiva: "Jardín Luminoso"
+## Propuesta de Instalación Interactiva: "Jardín Luminoso"
 
 **Descripción General:** Una instalación interactiva que fusiona lo digital y lo físico para crear una experiencia inmersiva multisensorial. La idea es transformar un espacio cerrado en un jardín mágico donde las proyecciones digitales y elementos físicos se combinan para envolver al espectador en un mundo de luces, sonidos y movimientos.
 
