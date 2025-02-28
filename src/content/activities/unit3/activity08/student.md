@@ -1,0 +1,1 @@
+En resumen, el paso por valor crea una copia independiente del objeto, mientras que el paso por referencia pasa una referencia al objeto original. En el fragmento de código proporcionado, es crucial usar el paso por valor (copy()) cuando se necesita modificar un objeto sin afectar el original, garantizando la precisión y consistencia en el comportamiento del programa.
