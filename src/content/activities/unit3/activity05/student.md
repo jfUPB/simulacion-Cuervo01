@@ -1,4 +1,5 @@
-Problema detectado
+### Problema detectado
+
 En el método applyForce(force), la aceleración se iguala directamente a la fuerza recibida:
 
 
@@ -11,7 +12,8 @@ applyForce(force) {
 ```
 Esto hace que la última fuerza aplicada sea la única que afecte al objeto en cada frame, ignorando las demás.
 
-Solución
+### Solución
+
 En lugar de sobrescribir la aceleración, se debe acumular la suma de todas las fuerzas y luego aplicarla a la aceleración correctamente usando la ecuación:
 a= ∑F/m
 ​
