@@ -18,10 +18,10 @@
 
 ## Ejemplos Concretos
 
-Problema: Los cuerpos desaparecían después de un tiempo.
+- Problema: Los cuerpos desaparecían después de un tiempo.
 
 Solución: Se agregaron rebotes en los bordes y restricciones en la posición para evitar que salieran del lienzo.
 
-Problema: Las líneas de conexión eran poco visibles y a veces no aparecían.
+- Problema: Las líneas de conexión eran poco visibles y a veces no aparecían.
 
 Solución: Se aumentó el rango de conexión y se aplicaron colores variables para mejorar la visibilidad.
