@@ -1,15 +1,15 @@
-##Cuerpos y fuerzas gravitacionales:
+## Cuerpos y fuerzas gravitacionales:
 
 Cada cuerpo es un objeto con posición, velocidad y aceleración, representado mediante la clase Body.
 Se implementó una fuerza de atracción entre el cursor y los cuerpos, simulando una interacción gravitatoria inversamente proporcional a la distancia (siguiendo la ley de la gravedad).
 También se incluyó una función de repulsión cuando se presiona el mouse, cambiando su dirección y color, lo que agrega interactividad.
 
-##Conexiones dinámicas:
+## Conexiones dinámicas:
 
 Se dibujan líneas de colores entre los cuerpos cuando están a una distancia menor a 250 píxeles.
 Las líneas varían en grosor y color, generando un efecto visual dinámico similar a una estructura en constante cambio.
 
-##Evitar que los cuerpos desaparezcan:
+## Evitar que los cuerpos desaparezcan:
 
 Se corrigió un problema donde los cuerpos podían salir del lienzo y desaparecer, agregando rebotes en los bordes de la pantalla.
 Ahora, cuando un cuerpo toca un borde, su dirección se invierte y se mantiene dentro de los límites.
