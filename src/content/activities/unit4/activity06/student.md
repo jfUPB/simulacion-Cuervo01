@@ -55,3 +55,7 @@ function draw() {
 ### Link: https://editor.p5js.org/Cuervo01/sketches/Ump2slsPo
 
 ### Captura: 
+
+
+https://github.com/user-attachments/assets/3543dc28-a76c-4bbf-9a04-e48baeb98a8b
+
