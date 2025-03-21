@@ -1,7 +1,7 @@
 ### Código:
 ```javascript
 let particles = [];
-let noiseScale = 0.01;
+let gravity = 0.1;
 let colorPalette;
 let currentPalette = 0;
 
@@ -32,48 +32,45 @@ function keyPressed() {
     currentPalette = (currentPalette + 1) % colorPalette.length; // Cambia la paleta de colores
   } else if (key === 'L' || key === 'l') {
     particles = []; // Limpia todas las partículas
+  } else if (key === 'G' || key === 'g') {
+    gravity += 0.02; // Aumenta la gravedad más suavemente
   }
 }
 
 function mousePressed() {
   // Reaparecen partículas al hacer clic
-  for (let i = 0; i < 500; i++) {
+  for (let i = 0; i < 300; i++) { // Reduce el número de partículas añadidas para menor caos
     particles.push(new Particle(random(width), random(height)));
   }
 }
 
 class Particle {
   constructor(x = random(width), y = random(height)) {
-    this.pos = createVector(x, y);
-    this.vel = createVector(0, 0);
-    this.acc = createVector(0, 0);
-    this.maxSpeed = random(2, 5);
-    this.size = random(2, 6);
+    this.origin = createVector(x, y);
+    this.angle = random(TWO_PI);
+    this.aVelocity = random(-0.03, 0.03); // Reduce la variación de velocidad angular inicial
+    this.aAcceleration = 0;
+    this.length = random(80, 120); // Mantiene longitudes más consistentes
+    this.size = random(3, 6);
+    this.damping = random(0.98, 1.01); // Reduce el rango de amortiguación
   }
 
   update() {
-    // Movimiento fluido basado en el ruido
-    let angle = noise(this.pos.x * noiseScale, this.pos.y * noiseScale) * TWO_PI * 4;
-    let force = p5.Vector.fromAngle(angle);
-    this.acc.add(force);
-
-    this.vel.add(this.acc);
-    this.vel.limit(this.maxSpeed);
-    this.pos.add(this.vel);
-    this.acc.mult(0);
-
-    // Reaparece al cruzar los bordes
-    if (this.pos.x > width) this.pos.x = 0;
-    if (this.pos.x < 0) this.pos.x = width;
-    if (this.pos.y > height) this.pos.y = 0;
-    if (this.pos.y < 0) this.pos.y = height;
+    // Simulación del péndulo con oscilación más estable
+    this.aAcceleration = (-1 * gravity / this.length) * sin(this.angle);
+    this.aVelocity += this.aAcceleration;
+    this.angle += this.aVelocity;
+    this.aVelocity *= this.damping; // Amortiguación menos extrema
   }
 
   display() {
     let col1 = colorPalette[currentPalette][0];
     let col2 = colorPalette[currentPalette][1];
-    fill(lerpColor(col1, col2, this.pos.x / width));
-    ellipse(this.pos.x, this.pos.y, this.size);
+    let posX = this.origin.x + this.length * sin(this.angle * noise(frameCount * 0.005)); // Reduce la influencia del ruido
+    let posY = this.origin.y + this.length * cos(this.angle * noise(frameCount * 0.005));
+    
+    fill(lerpColor(col1, col2, posX / width));
+    ellipse(posX, posY, this.size);
   }
 }
 ```
