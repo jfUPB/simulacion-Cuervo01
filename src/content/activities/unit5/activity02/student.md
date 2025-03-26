@@ -248,3 +248,242 @@ class ParticleSystem {
 ```
 #### Link: https://editor.p5js.org/Cuervo01/sketches/SkiUYrRU8
 
+## Ejemplo 4.6: a Particle System with Forces.
+### Código: 
+
+```javascript
+let particles = [];
+let gravity;
+let bgColor = 0;
+
+function setup() {
+  createCanvas(600, 400);
+  gravity = createVector(0, 0.1);
+}
+
+function draw() {
+  // Fondo dinámico
+  bgColor = (bgColor + 0.5) % 360;
+  colorMode(HSB, 360, 100, 100);
+  background(bgColor, 50, 30);
+
+  particles.push(new Particle(width / 2, 50));
+
+  for (let i = particles.length - 1; i >= 0; i--) {
+    let p = particles[i];
+    let friction = p.vel.copy().mult(-0.02);
+    p.applyForce(gravity);
+    p.applyForce(friction);
+    p.oscillate();
+    p.update();
+    p.show();
+    if (p.isDead()) {
+      particles.splice(i, 1);
+    }
+  }
+}
+
+class Particle {
+  constructor(x, y) {
+    this.pos = createVector(x, y);
+    this.vel = createVector(random(-1, 1), random(-2, 0));
+    this.acc = createVector(0, 0);
+    this.lifespan = 300; // Duración extendida
+    this.angle = random(TWO_PI);
+    this.trail = [];
+  }
+
+  applyForce(force) {
+    this.acc.add(force);
+  }
+
+  oscillate() {
+    this.pos.x += sin(this.angle) * 2;
+    this.angle += 0.1;
+  }
+
+  update() {
+    this.vel.add(this.acc);
+    this.pos.add(this.vel);
+    this.acc.mult(0);
+    this.lifespan -= 1;
+
+    // Guardar posiciones para la estela
+    this.trail.push(this.pos.copy());
+    if (this.trail.length > 15) {
+      this.trail.shift();
+    }
+  }
+
+  show() {
+    noFill();
+    strokeWeight(2);
+    stroke(lerpColor(color(60, 100, 100, 150), color(200, 100, 100, 0), this.lifespan / 300));
+    beginShape();
+    for (let pos of this.trail) {
+      vertex(pos.x, pos.y);
+    }
+    endShape();
+
+    // Dibujar la partícula con brillo
+    noStroke();
+    fill(255, this.lifespan);
+    ellipse(this.pos.x, this.pos.y, 12 + sin(frameCount * 0.1) * 3); // Animación del tamaño
+  }
+
+  isDead() {
+    return this.lifespan <= 0;
+  }
+}
+```
+### Link: 
+
+https://editor.p5js.org/Cuervo01/sketches/-bZLoVSi1
+
+## Ejemplo 4.7: a Particle System with a Repeller.
+### Código
+
+```javascript
+let particleSystem;
+let repeller;
+
+function setup() {
+  createCanvas(600, 600);
+  particleSystem = new ParticleSystem(createVector(width / 2, 50));
+  repeller = new Repeller(width / 2, height / 2, 80);
+}
+
+function draw() {
+  // Fondo más uniforme y suave para destacar las partículas
+  background(20, 24, 45);
+
+  repeller.display();
+  particleSystem.applyRepeller(repeller);
+  particleSystem.run();
+}
+
+// Clase para las partículas
+class Particle {
+  constructor(position) {
+    this.position = position.copy();
+    this.velocity = createVector(random(-1, 1), random(-3, 2));
+    this.acceleration = createVector(0, 0.2);
+    this.lifespan = 255;
+    this.size = random(8, 14);
+    this.color = color(random(200, 250), random(50, 100), random(100, 200), this.lifespan); // Tonos vivos contrastantes
+    this.trail = [];
+  }
+
+  applyForce(force) {
+    this.acceleration.add(force);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
+    this.lifespan -= 2;
+
+    // Actualizar el rastro
+    this.trail.push(this.position.copy());
+    if (this.trail.length > 10) {
+      this.trail.shift();
+    }
+  }
+
+  display() {
+    // Dibujar el rastro
+    noFill();
+    strokeWeight(3);
+    stroke(lerpColor(color(255, 100, 100, 150), color(100, 255, 200, 0), this.lifespan / 255));
+    beginShape();
+    for (let pos of this.trail) {
+      vertex(pos.x, pos.y);
+    }
+    endShape();
+
+    // Dibujar la partícula
+    noStroke();
+    fill(this.color);
+    ellipse(this.position.x, this.position.y, this.size);
+  }
+
+  isDead() {
+    return this.lifespan <= 0 || this.position.y > height;
+  }
+}
+
+// Sistema de partículas
+class ParticleSystem {
+  constructor(position) {
+    this.origin = position.copy();
+    this.particles = [];
+  }
+
+  addParticle() {
+    this.particles.push(new Particle(this.origin));
+  }
+
+  applyRepeller(repeller) {
+    for (let p of this.particles) {
+      if (repeller.collides(p)) {
+        let dir = p5.Vector.sub(p.position, repeller.position);
+        dir.normalize();
+        p.velocity.reflect(dir).mult(1.5);
+        p.position.add(dir.mult(repeller.size / 2 + p.size / 2));
+      } else {
+        let force = repeller.repel(p);
+        p.applyForce(force);
+      }
+    }
+  }
+
+  run() {
+    this.addParticle();
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      let p = this.particles[i];
+      p.update();
+      p.display();
+      if (p.isDead()) {
+        this.particles.splice(i, 1);
+      }
+    }
+  }
+}
+
+// Clase para el repeller
+class Repeller {
+  constructor(x, y, size) {
+    this.position = createVector(x, y);
+    this.strength = 600;
+    this.size = size;
+  }
+
+  repel(particle) {
+    let dir = p5.Vector.sub(particle.position, this.position);
+    let distance = constrain(dir.mag(), 10, 100);
+    dir.normalize();
+    let force = -this.strength / (distance * distance);
+    dir.mult(force);
+    return dir;
+  }
+
+  collides(particle) {
+    let d = dist(this.position.x, this.position.y, particle.position.x, particle.position.y);
+    return d < this.size / 2 + particle.size / 2;
+  }
+
+  display() {
+    // Repeller visualmente más destacable
+    fill(250, 80, 100, 200);
+    stroke(255, 100, 150);
+    strokeWeight(3);
+    ellipse(this.position.x, this.position.y, this.size);
+
+    noFill();
+    strokeWeight(2);
+    stroke(lerpColor(color(255, 150, 100), color(100, 255, 150), sin(frameCount * 0.1) * 0.5 + 0.5));
+    ellipse(this.position.x, this.position.y, this.size + sin(frameCount * 0.2) * 15);
+  }
+}
+```
