@@ -140,6 +140,8 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 ```
+### Link: https://editor.p5js.org/Cuervo01/sketches/jUF4l_eUB
+
 ### 1. Herencia y Polimorfismo
 Qué implementé:
 
