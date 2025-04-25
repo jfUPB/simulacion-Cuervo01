@@ -1,3 +1,27 @@
+### 1. Flujo de trabajo
+Para integrar Matter.js en p5.js, comencé importando las librerías y configurando el motor de física dentro de setup(). En esa función, también inicialicé el mundo, el motor de física, el suelo y el mouse constraint.
+En draw(), actualizo el motor con Engine.update(engine) para que los cuerpos físicos se comporten de manera realista. Después, dibujo el fondo animado tipo nebulosa, las partículas (efecto visual), y luego cada letra usando su posición y ángulo obtenidos desde Matter.js.
+
+### 2. Representación visual vs. simulación física
+Cada letra del texto "CAER" fue convertida en un cuerpo físico rectangular (con Bodies.rectangle) y le asigné una propiedad personalizada llamada .text que guarda la letra específica.
+Para representarlas visualmente en el canvas, uso translate() y rotate() en base a la posición y ángulo del cuerpo, y luego dibujo el texto con text(). El reto fue mantener la sincronización visual con la física, ya que un pequeño error en las transformaciones puede hacer que el texto “flote” o se vea desfasado respecto al cuerpo físico.
+
+### 3. Creación de formas complejas
+Aunque las letras son visualmente distintas, en la simulación física se usan cajas rectangulares para simplificar. En este caso no se buscó una forma compleja con vértices, sino que se representó cada letra sobre un cuerpo simple. Esto facilitó el proceso y evitó problemas de colisión más complejos, aunque limita la fidelidad física respecto a la forma real de cada letra.
+Crear formas más complejas sería posible con Bodies.fromVertices, pero requiere mucho más trabajo y precisión.
+
+### 4. Física para la semántica
+El uso de física fue muy efectivo para reforzar el significado de la palabra "CAER". Las letras literalmente caen por efecto de la gravedad y rebotan, lo que le da una dimensión visual y cinética al significado.
+Este enfoque funciona especialmente bien para palabras relacionadas con movimiento, peso, inestabilidad, impacto o transformación.
+Por otro lado, palabras abstractas como "amor" o "memoria" podrían ser más difíciles de traducir a un comportamiento físico directo sin una metáfora visual clara.
+
+### 5. Potencial exploratorio
+La combinación de p5.js y Matter.js abre muchas posibilidades. Desde instalaciones interactivas hasta visualizaciones de datos con movimiento físico, pasando por juegos o arte generativo.
+Particularmente me interesa seguir explorando el uso de partículas, reacciones físicas al sonido o al mouse, y crear experiencias donde el texto o los elementos visuales "sientan" el entorno. La física no solo añade realismo, sino que también puede aportar poética visual y narrativa interactiva.
+
+
+```javascript
+
 let Engine = Matter.Engine,
     World = Matter.World,
     Bodies = Matter.Bodies,
@@ -123,9 +147,12 @@ function draw() {
   // Ground
   noStroke();
   fill(50, 50, 80, 100);
+
   rectMode(CENTER);
   rect(ground.position.x, ground.position.y, width, 20);
 
   prevMouseX = mouseX;
   prevMouseY = mouseY;
 }
+
+```
